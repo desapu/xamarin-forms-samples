@@ -75,6 +75,10 @@
                           Detail="Vertical list"
                           Command="{Binding NavigateCommand}"
                           CommandParameter="{x:Type views:VerticalListDynamicSizeItemsPage}" />
+                <TextCell Text="Dynamic Content"
+                          Detail="Dynamic Content"
+                          Command="{Binding NavigateCommand}"
+                          CommandParameter="{x:Type views:DynamicContentPage}" />
             </TableSection>
             <TableSection Title="Selection">
                 <TextCell Text="Single"

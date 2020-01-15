@@ -7,5 +7,6 @@
         public string Details { get; set; }
         public string ImageUrl { get; set; }
         public bool IsFavorite { get; set; }
+        public bool ShowDetail { get; set; }
     }
 }

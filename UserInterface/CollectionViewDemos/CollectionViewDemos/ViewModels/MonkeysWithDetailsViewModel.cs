@@ -9,71 +9,24 @@ using Xamarin.Forms;
 
 namespace CollectionViewDemos.ViewModels
 {
-    public class MonkeysViewModel : INotifyPropertyChanged
+    public class MonkeysWithDetailsViewModel : INotifyPropertyChanged
     {
-        readonly IList<Monkey> source;
-        Monkey selectedMonkey;
-        int selectionCount = 1;
+        readonly IList<MonkeyWithDetails> source;
 
-        public ObservableCollection<Monkey> Monkeys { get; private set; }
-        public IList<Monkey> EmptyMonkeys { get; private set; }
+        public ObservableCollection<MonkeyWithDetails> Monkeys { get; private set; }
+        public IList<MonkeyWithDetails> EmptyMonkeys { get; private set; }
 
-        public Monkey SelectedMonkey
+        public ICommand ShowDetailsCommand => new Command<MonkeyWithDetails>(ShowDetailsChanged);
+
+        public MonkeysWithDetailsViewModel()
         {
-            get
-            {
-                return selectedMonkey;
-            }
-            set
-            {
-                if (selectedMonkey != value)
-                {
-                    selectedMonkey = value;
-                }
-            }
-        }
-
-        ObservableCollection<object> selectedMonkeys;
-        public ObservableCollection<object> SelectedMonkeys
-        {
-            get
-            {
-                return selectedMonkeys;
-            }
-            set
-            {
-                if (selectedMonkeys != value)
-                {
-                    selectedMonkeys = value;
-                }
-            }
-        }
-
-        public string SelectedMonkeyMessage { get; private set; }
-
-        public ICommand DeleteCommand => new Command<Monkey>(RemoveMonkey);
-        public ICommand FavoriteCommand => new Command<Monkey>(FavoriteMonkey);
-        public ICommand FilterCommand => new Command<string>(FilterItems);
-        public ICommand MonkeySelectionChangedCommand => new Command(MonkeySelectionChanged);
-        public ICommand ShowDetailsCommand => new Command<Monkey>(ShowDetailsChanged);
-
-        public MonkeysViewModel()
-        {
-            source = new List<Monkey>();
+            source = new List<MonkeyWithDetails>();
             CreateMonkeyCollection();
-
-            selectedMonkey = Monkeys.Skip(3).FirstOrDefault();
-            MonkeySelectionChanged();
-
-            SelectedMonkeys = new ObservableCollection<object>()
-            {
-                Monkeys[1], Monkeys[3], Monkeys[4]
-            };
         }
 
         void CreateMonkeyCollection()
         {
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Baboon",
                 Location = "Africa & Asia",
@@ -81,7 +34,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Papio_anubis_%28Serengeti%2C_2009%29.jpg/200px-Papio_anubis_%28Serengeti%2C_2009%29.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Capuchin Monkey",
                 Location = "Central & South America",
@@ -89,7 +42,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Capuchin_Costa_Rica.jpg/200px-Capuchin_Costa_Rica.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Blue Monkey",
                 Location = "Central and East Africa",
@@ -97,7 +50,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/8/83/BlueMonkey.jpg/220px-BlueMonkey.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Squirrel Monkey",
                 Location = "Central & South America",
@@ -105,7 +58,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Saimiri_sciureus-1_Luc_Viatour.jpg/220px-Saimiri_sciureus-1_Luc_Viatour.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Golden Lion Tamarin",
                 Location = "Brazil",
@@ -113,7 +66,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Golden_lion_tamarin_portrait3.jpg/220px-Golden_lion_tamarin_portrait3.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Howler Monkey",
                 Location = "South America",
@@ -121,7 +74,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Alouatta_guariba.jpg/200px-Alouatta_guariba.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Japanese Macaque",
                 Location = "Japan",
@@ -129,7 +82,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Macaca_fuscata_fuscata1.jpg/220px-Macaca_fuscata_fuscata1.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Mandrill",
                 Location = "Southern Cameroon, Gabon, Equatorial Guinea, and Congo",
@@ -137,7 +90,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Mandrill_at_san_francisco_zoo.jpg/220px-Mandrill_at_san_francisco_zoo.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Proboscis Monkey",
                 Location = "Borneo",
@@ -145,7 +98,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Proboscis_Monkey_in_Borneo.jpg/250px-Proboscis_Monkey_in_Borneo.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Red-shanked Douc",
                 Location = "Vietnam, Laos",
@@ -153,7 +106,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Portrait_of_a_Douc.jpg/159px-Portrait_of_a_Douc.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Gray-shanked Douc",
                 Location = "Vietnam",
@@ -161,7 +114,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cuc.Phuong.Primate.Rehab.center.jpg/320px-Cuc.Phuong.Primate.Rehab.center.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Golden Snub-nosed Monkey",
                 Location = "China",
@@ -169,7 +122,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Golden_Snub-nosed_Monkeys%2C_Qinling_Mountains_-_China.jpg/165px-Golden_Snub-nosed_Monkeys%2C_Qinling_Mountains_-_China.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Black Snub-nosed Monkey",
                 Location = "China",
@@ -177,7 +130,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/RhinopitecusBieti.jpg/320px-RhinopitecusBieti.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Tonkin Snub-nosed Monkey",
                 Location = "Vietnam",
@@ -185,7 +138,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Tonkin_snub-nosed_monkeys_%28Rhinopithecus_avunculus%29.jpg/320px-Tonkin_snub-nosed_monkeys_%28Rhinopithecus_avunculus%29.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Thomas's Langur",
                 Location = "Indonesia",
@@ -193,7 +146,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Thomas%27s_langur_Presbytis_thomasi.jpg/142px-Thomas%27s_langur_Presbytis_thomasi.jpg"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Purple-faced Langur",
                 Location = "Sri Lanka",
@@ -201,7 +154,7 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Semnopithèque_blanchâtre_mâle.JPG/192px-Semnopithèque_blanchâtre_mâle.JPG"
             });
 
-            source.Add(new Monkey
+            source.Add(new MonkeyWithDetails
             {
                 Name = "Gelada",
                 Location = "Ethiopia",
@@ -209,51 +162,12 @@ namespace CollectionViewDemos.ViewModels
                 ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Gelada-Pavian.jpg/320px-Gelada-Pavian.jpg"
             });
 
-            Monkeys = new ObservableCollection<Monkey>(source);
+            Monkeys = new ObservableCollection<MonkeyWithDetails>(source);
         }
 
-        void FilterItems(string filter)
+        void ShowDetailsChanged(MonkeyWithDetails monkey)
         {
-            var filteredItems = source.Where(monkey => monkey.Name.ToLower().Contains(filter.ToLower())).ToList();
-            foreach (var monkey in source)
-            {
-                if (!filteredItems.Contains(monkey))
-                {
-                    Monkeys.Remove(monkey);
-                }
-                else
-                {
-                    if (!Monkeys.Contains(monkey))
-                    {
-                        Monkeys.Add(monkey);
-                    }
-                }
-            }
-        }
-
-        void MonkeySelectionChanged()
-        {
-            SelectedMonkeyMessage = $"Selection {selectionCount}: {SelectedMonkey.Name}";
-            OnPropertyChanged("SelectedMonkeyMessage");
-            selectionCount++;
-        }
-
-        void RemoveMonkey(Monkey monkey)
-        {
-            if (Monkeys.Contains(monkey))
-            {
-                Monkeys.Remove(monkey);
-            }
-        }
-
-        void FavoriteMonkey(Monkey monkey)
-        {
-            monkey.IsFavorite = !monkey.IsFavorite;
-        }
-
-        void ShowDetailsChanged(Monkey monkey)
-        {
-            monkey.ShowDetail = true;
+            monkey.ShowDetails = true;
         }
 
 
