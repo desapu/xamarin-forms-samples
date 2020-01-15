@@ -23,6 +23,7 @@
     <Folder Include="Views\Interaction\" />
     <Folder Include="Views\Swipe\" />
     <Folder Include="Views\Indicators\" />
+    <Folder Include="Views\CollectionView\" />
   </ItemGroup>
 
   <ItemGroup>

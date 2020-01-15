@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewsmodel="clr-namespace:CarouselViewDemos.ViewModels"
+    x:Class="CarouselViewDemos.Views.CollectionViewPage">
+
+    <ContentPage.BindingContext>
+        <viewsmodel:MonkeysOnCollectionViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <CollectionView
+            ItemsSource="{Binding Rows}"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    ItemSpacing="30"
+                    Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <CarouselView
+                            x:Name="carouselView"
+                            Position="{Binding Position}"
+                            ItemsSource="{Binding Monkeys}" HeightRequest="300">
+                            <CarouselView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" />
+                            </CarouselView.ItemsLayout>
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding ImageUrl}" />
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="Position: " /><Label Text="{Binding Position}" />
+                        </StackLayout>
+                        <IndicatorView ItemsSourceBy="carouselView"
+                            IndicatorColor="LightGray"
+                            SelectedIndicatorColor="DarkGray"
+                            HorizontalOptions="Center" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

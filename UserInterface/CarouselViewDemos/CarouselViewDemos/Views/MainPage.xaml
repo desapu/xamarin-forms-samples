@@ -143,6 +143,12 @@
                           Command="{Binding NavigateCommand}"
                           CommandParameter="{x:Type views:HorizontalSwipeItemsPage}" />
             </TableSection>
+            <TableSection Title="Collection View">
+                <TextCell Text="Carousel in Collection View"
+                          Detail="Collection View"
+                          Command="{Binding NavigateCommand}"
+                          CommandParameter="{x:Type views:CollectionViewPage}" />
+            </TableSection>
         </TableRoot>
     </TableView>
 </ContentPage>
