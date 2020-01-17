@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CollectionViewDemos.Controls"
+             x:Class="CollectionViewDemos.Views.MultipleDataTemplateSizePage"
+             Title="Data Templates with Multiple Sizes (DataTemplateSelector)">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SizeSmallTemplate">
+            <Grid Padding="10" BackgroundColor="Red">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.RowSpan="2" 
+                       Source="{Binding ImageUrl}" 
+                       Aspect="AspectFill"
+                       HeightRequest="60" 
+                       WidthRequest="60" />
+                <Label Grid.Column="1" 
+                       Text="{Binding Name}"
+                       FontAttributes="Bold" />
+                <Label Grid.Row="1"
+                       Grid.Column="1" 
+                       Text="{Binding Location}"
+                       TextColor="Teal"
+                       FontAttributes="Italic" 
+                       VerticalOptions="End" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SizeMediumTemplate">
+            <Grid Padding="10" BackgroundColor="Green">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.RowSpan="2" 
+                       Source="{Binding ImageUrl}" 
+                       Aspect="AspectFill"
+                       Opacity="0.5"
+                       HeightRequest="120" 
+                       WidthRequest="120" />
+                <Label Grid.Column="1" 
+                       Text="{Binding Name}"
+                       FontAttributes="Bold" />
+                <Label Grid.Row="1"
+                       Grid.Column="1" 
+                       Text="{Binding Location}"
+                       TextColor="Silver"
+                       FontAttributes="Italic"
+                       VerticalOptions="End" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SizeLargeTemplate">
+            <Grid Padding="10" BackgroundColor="Blue">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.RowSpan="2" 
+                       Source="{Binding ImageUrl}" 
+                       Aspect="AspectFill"
+                       Opacity="0.5"
+                       HeightRequest="240" 
+                       WidthRequest="240" />
+                <Label Grid.Column="1" 
+                       Text="{Binding Name}"
+                       FontAttributes="Bold" />
+                <Label Grid.Row="1"
+                       Grid.Column="1" 
+                       Text="{Binding Location}"
+                       TextColor="Silver"
+                       FontAttributes="Italic"
+                       VerticalOptions="End" />
+            </Grid>
+        </DataTemplate>
+        
+        <controls:SizeDataTemplateSelector x:Key="AnimalSelector"
+                                             SizeSmall="{StaticResource SizeSmallTemplate}"
+                                             SizeMedium="{StaticResource SizeMediumTemplate}"
+                                             SizeLarge="{StaticResource SizeLargeTemplate}"/>
+    </ContentPage.Resources>
+    
+    <StackLayout Margin="20">
+        <CollectionView ItemsSource="{Binding Animals}"
+                        RemainingItemsThreshold="5"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}"
+                        ItemTemplate="{StaticResource AnimalSelector}" />
+    </StackLayout>
+</ContentPage>

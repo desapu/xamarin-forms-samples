@@ -79,6 +79,10 @@
                           Detail="Dynamic Content"
                           Command="{Binding NavigateCommand}"
                           CommandParameter="{x:Type views:DynamicContentPage}" />
+                <TextCell Text="Multi-size Data Template"
+                          Detail="Multi-size Data Template"
+                          Command="{Binding NavigateCommand}"
+                          CommandParameter="{x:Type views:MultipleDataTemplateSizePage}" />
             </TableSection>
             <TableSection Title="Selection">
                 <TextCell Text="Single"
