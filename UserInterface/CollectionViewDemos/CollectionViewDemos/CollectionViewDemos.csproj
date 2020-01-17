@@ -26,6 +26,7 @@
     <Folder Include="Views\HeadersAndFooters\" />
     <Folder Include="Views\PullToRefresh\" />
     <Folder Include="Views\Swipe\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
 
   <ItemGroup>

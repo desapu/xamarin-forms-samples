@@ -17,6 +17,7 @@ namespace CollectionViewDemos.ViewModels
         public IList<MonkeyWithDetails> EmptyMonkeys { get; private set; }
 
         public ICommand ShowDetailsCommand => new Command<MonkeyWithDetails>(ShowDetailsChanged);
+        public ICommand HideDetailsCommand => new Command<MonkeyWithDetails>(HideDetailsChanged);
 
         public MonkeysWithDetailsViewModel()
         {
@@ -170,6 +171,10 @@ namespace CollectionViewDemos.ViewModels
             monkey.ShowDetails = true;
         }
 
+        void HideDetailsChanged(MonkeyWithDetails monkey)
+        {
+            monkey.ShowDetails = false;
+        }
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
